@@ -1,28 +1,19 @@
-name: Build and deploy
 on:
-  push:
-    branches: master
-  workflow_dispatch:
-
+ push:
+  branches:
+   -master
+name: production Deploy
 jobs:
-  build:
-    name: Build ⛏
-    runs-on: ubuntu-latest
-  deploy:
-    name: Deploy 🚀
-    needs: build
-    runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout repository
-        uses: actions/checkout@main
-      - name: Download artifact
-        uses: actions/download-artifact@main
-        with: 
-          name: dist
-          path: dist
-      - name: Sync files to hosting
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-        with: 
-          server: ftp://43.255.154.8
-          username: nikunjnasit@codetrinity.com
-          password: ${{ secrets.ftp_password }}
+  FTP-Deploy-Action:
+   name: FTP-Deploy-Action
+   runs-on: ubuntu-latest
+   steps:
+    -uses: action/checkout@v2.1.0
+    with:
+     fetch-depth: 2
+    -name: FTP-Deploy-Action
+    uses: SamKirkland/FTP-Deploy-Action@3.1.1
+    with:
+     ftp-server: ftp://43.255.154.8
+     ftp-username: nikunjnasit@codetrinity.com
+     ftp-password: ${{ secrets.FTP_PASSWORD }}
