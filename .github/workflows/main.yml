@@ -14,6 +14,6 @@ jobs:
     -name: FTP-Deploy-Action
     uses: SamKirkland/FTP-Deploy-Action@3.1.1
     with:
-     ftp-server: ftp://43.255.154.8
+     ftp-server: ftp://ftp.rutvikvaghasiya.com
      ftp-username: nikunjnasit@codetrinity.com
      ftp-password: ${{ secrets.FTP_PASSWORD }}
