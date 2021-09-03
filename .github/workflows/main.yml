@@ -11,7 +11,13 @@ jobs:
     -uses: action/checkout@v2.1.0
     -name: FTP-Deploy-Action
     uses: SamKirkland/FTP-Deploy-Action@3.1.1
+  always_job: 
+    name: always run job
+    runs-on: ubuntu-latest
+    steps:
+      -name: always run
+      run: echo "This job is Used"  
     with:
-     ftp-server: ftp://ftp.rutvikvaghasiya.com
+     ftp-server: ftp://43.255.154.8
      ftp-username: nikunjnasit@codetrinity.com
      ftp-password: ${{ secrets.FTP_PASSWORD }}
