@@ -9,7 +9,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./themes/our-awesome-theme
+        working-directory: ./
     steps:
     - uses: actions/checkout@v2
       with:
