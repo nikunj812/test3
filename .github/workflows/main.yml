@@ -1,23 +1,32 @@
+name: Staging Deploy
+
 on:
- push:
-  branches:
-   -main
-name: production Deploy
+  push:
+    branches: [ master ]
 jobs:
-  FTP-Deploy-Action:
-   name: FTP-Deploy-Action
-   runs-on: ubuntu-latest
-   steps:
-    -uses: action/checkout@v2.1.0
-    -name: FTP-Deploy-Action
-    uses: SamKirkland/FTP-Deploy-Action@3.1.1
-  always_job: 
-    name: always run job
+  build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./themes/our-awesome-theme
     steps:
-      -name: always run
-      run: echo "This job is Used"  
-    with:
-     ftp-server: ftp://43.255.154.8
-     ftp-username: nikunjnasit@codetrinity.com
-     ftp-password: ${{ secrets.FTP_PASSWORD }}
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+
+    - name: Install Composer Dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: npm install
+      run: npm install
+
+    - name: npm run bundle
+      run: npm run bundle
+
+    - name: FTP Deploy to WP Engine (Staging)
+      uses: SamKirkland/FTP-Deploy-Action@3.1.1
+      with:
+        ftp-server: ftp://43.255.154.8
+        ftp-username: nikunjnasit@codetrinity.com
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
